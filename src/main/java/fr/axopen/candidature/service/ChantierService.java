@@ -7,9 +7,11 @@ import fr.axopen.candidature.mapper.JournalMapper;
 import fr.axopen.candidature.repository.ChantierRepository;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +89,7 @@ public class ChantierService {
         return result;
     }
 
-    public List<Chantier> getChantiersByCurrentYear() {
+    public List<ChantierDTO> getChantiersByCurrentYear() {
         Chantier[] cL = this.cR.findAll().toArray(new Chantier[0]);
         ArrayList<Chantier> cAL = new ArrayList<>();
 
@@ -97,7 +99,7 @@ public class ChantierService {
             }
         }
 
-        return cAL;
+        return this.cM.chantierToChantierDTO(cAL);
     }
 
     public void deleteById(Long id) {
